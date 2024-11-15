@@ -3,24 +3,24 @@ console.log("Pokemon Journey Begins...");
 const encounterButton = document.getElementById("pokemonEncounterButton");
 const pokemonRenderArea = document.getElementById("encounteredPokemonArea");
 const pokemonContainerDiv = document.getElementById("pokemonContainer");
+const encounterGroupButton = document.getElementById("pokemonGroupEncounterButton");
 
 function renderPokemonData(pokemonData){
     if (!pokemonData.name) {
         return;
-    
     }
     // This Div has a class now
     pokemonContainerDiv.classList += "pokemonCardEntry";
 
-// attach an image to the container
+    // attach an image to the container
+    let pokemonHeading = document.createElement("h1");
+    pokemonHeading.innerText = pokemonData.name;
+    pokemonContainerDiv.appendChild(pokemonHeading);
+
     let pokemonImage = document.createElement("img");
     pokemonImage.src = pokemonData.image;
     // must append it to the div tag
     pokemonContainerDiv.appendChild(pokemonImage);
-
-    let pokemonHeading = document.createElement("h1");
-    pokemonHeading.innerText = pokemonData.name;
-    pokemonContainerDiv.appendChild(pokemonHeading);
 
     let pokemonTypesHeading = document.createElement("h3");
     pokemonTypesHeading.innerText = "Types";
@@ -84,12 +84,48 @@ return {
 //make sure to async and await to return the value of the function.
 encounterButton.addEventListener("click", async (event) => {
     console.log("Doing something...");
-
+   
     let pokemonResult = await getPokemon();
-    let apiData
+    //let apiData
 
     console.log(pokemonResult);
 
     renderPokemonData(pokemonResult);
-
 });
+    encounterGroupButton.addEventListener("click", async () => {
+        pokemonContainerDiv.innerText = "";
+
+
+        //From what we learnt so far
+        // let pokemonResult1 = await getPokemon();
+        // renderPokemonData(pokemonResult1);
+        // let pokemonResult2 = await getPokemon();
+        // renderPokemonData(pokemonResult2);
+        // let pokemonResult3 = await getPokemon();
+        // renderPokemonData(pokemonResult3);
+        // let pokemonResult4 = await getPokemon();
+        // renderPokemonData(pokemonResult4);
+        // let pokemonResult5 = await getPokemon();
+        // renderPokemonData(pokemonResult5);
+        // let pokemonResult6 = await getPokemon();
+        // renderPokemonData(pokemonResult6);
+
+        let multiplePokemonResults = await Promise.all([
+            getPokemon(),
+            getPokemon(),
+            getPokemon(),
+            getPokemon(),
+            getPokemon(),
+            getPokemon()
+        ]);
+        // Check if the output is as expected
+            console.log(multiplePokemonResults);
+
+            multiplePokemonResults.forEach(renderPokemonData);
+     
+            // Lengthier version of the above code
+            // multiplePokemonResults.forEach((pokemonResult) => {
+            // renderPokemonData(pokemonResult);
+            // })
+       
+    });
