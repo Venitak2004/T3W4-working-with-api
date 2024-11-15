@@ -1,6 +1,11 @@
 console.log("Pokemon Journey Begins...");
 
 const encounterButton = document.getElementById("pokemonEncounterButton");
+const pokemonRenderArea = document.getElementById("encounteredPokemonArea");
+
+function renderPokemonData(pokemonData){
+    pokemonRenderArea.innerText = pokemonData.name;
+}
 
 async function getPokemon() {
     console.log("Looking for a wild Pokemon");
@@ -32,5 +37,7 @@ encounterButton.addEventListener("click", async (event) => {
     let apiData
 
     console.log(pokemonResult);
+
+    renderPokemonData(pokemonResult);
 
 });
